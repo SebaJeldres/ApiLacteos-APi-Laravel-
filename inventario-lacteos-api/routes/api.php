@@ -10,9 +10,8 @@ Route::get('/users/{id_usuario}', function (){
     return 'usuario específico';
 });
 
-Route::post('/users', function (){
-    return 'Creando usuarios';
-});
+Route::post('/users', [userController::class,'store']);
+
 
 Route::put('/users/{id_usuario}', function (){
     return 'actualizando usuario';
