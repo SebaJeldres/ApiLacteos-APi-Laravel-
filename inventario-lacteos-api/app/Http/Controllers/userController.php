@@ -146,4 +146,60 @@ class userController extends Controller
         ];
         return response()->json($data, 200);
     }
+
+    public function updatePartial (Request $request, $id_usuario)
+    {
+        $user = User::find($id_usuario);
+
+        if (! $user) {
+            $data = [
+                'message' => 'Usuario no encontrado',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'max:255',
+            'correo' => 'email|unique:user,correo,',
+            'password' => 'min:6',
+            'telefono' => 'string|max:15',
+        ]);
+
+        if ($validator->fails()) {
+            $data = [
+                'message' => 'Error de validación',
+                'errors' => $validator->errors(),
+                'status' => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        if ($request->has('correo')) {
+            $user->correo = $request->correo;
+        }
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        if ($request->has('telefono')) {
+            $user->telefono = $request->telefono;
+        }
+
+        if ($request->has('telefono')) {
+            $user->telefono = $request->telefono;
+        }
+
+        $user->save();
+        
+        $data = [
+            'message'=> 'Usuario actualizado parcialmente',
+            'user' => $user,
+            'status' => 200
+        ];
+
+        return response()->json($data, 200);
+    }
 }

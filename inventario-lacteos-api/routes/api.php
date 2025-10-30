@@ -14,4 +14,5 @@ Route::delete('/users/{id}', [userController::class,'delete']);
 
 Route::put('/users/{id}', [userController::class,'update']);
 
+Route::patch('/users/{id}', [userController::class,'updatePartial']);
 
