@@ -10,11 +10,8 @@ Route::get('/users/{id}', [userController::class,'show']);
 
 Route::post('/users', [userController::class,'store']);
 
+Route::delete('/users/{id}', [userController::class,'delete']);
 
-Route::put('/users/{id_usuario}', function (){
-    return 'actualizando usuario';
-});
+Route::put('/users/{id}', [userController::class,'update']);
 
-Route::delete('/users/{id_usuario}', function (){
-    return 'eliminando usuario';
-});
+
