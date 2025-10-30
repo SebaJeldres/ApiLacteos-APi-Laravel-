@@ -64,4 +64,26 @@ class userController extends Controller
 
         return response()->json($data, 201);
     }
+
+    public function show($id_usuario)
+    {
+        $user = User::find($id_usuario);
+
+        if (! $user) {
+            $data = [
+                'message' => 'Usuario no encontrado',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $data = [
+            'user' => $user,
+            'status' => 200
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    
 }

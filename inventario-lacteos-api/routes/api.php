@@ -6,9 +6,7 @@ use App\Http\Controllers\userController;
 
 Route::get('/users', [userController::class,'index']);
 
-Route::get('/users/{id_usuario}', function (){
-    return 'usuario específico';
-});
+Route::get('/users/{id}', [userController::class,'show']);
 
 Route::post('/users', [userController::class,'store']);
 
