@@ -6,17 +6,13 @@ use App\Http\Controllers\userController;
 
 Route::get('/users', [userController::class,'index']);
 
-Route::get('/users/{id_usuario}', function (){
-    return 'usuario específico';
-});
+Route::get('/users/{id}', [userController::class,'show']);
 
 Route::post('/users', [userController::class,'store']);
 
+Route::delete('/users/{id}', [userController::class,'delete']);
 
-Route::put('/users/{id_usuario}', function (){
-    return 'actualizando usuario';
-});
+Route::put('/users/{id}', [userController::class,'update']);
 
-Route::delete('/users/{id_usuario}', function (){
-    return 'eliminando usuario';
-});
+Route::patch('/users/{id}', [userController::class,'updatePartial']);
+
