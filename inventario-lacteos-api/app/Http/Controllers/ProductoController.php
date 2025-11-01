@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\http\controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -12,7 +14,17 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::all();
+
+        if ($productos->isEmpty()) {
+            $data = [
+                'message' => 'No se encontraron productos',
+                'statues' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        return response()->json($productos, 200);
     }
 
     /**
