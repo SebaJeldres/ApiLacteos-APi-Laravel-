@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\http\controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -12,7 +14,17 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::all();
+
+        if ($productos->isEmpty()) {
+            $data = [
+                'message' => 'No se encontraron productos',
+                'statues' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        return response()->json($productos, 200);
     }
 
     /**
@@ -26,7 +38,7 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, )
     {
         //
     }
@@ -34,15 +46,30 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Producto $producto)
+    public function show($id_producto)
     {
-        //
+        $producto = Producto::find($id_producto);
+
+        if (!$producto) {
+            $data = [
+                'message' => 'Producto no encontrado',
+                'statues' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $data = [
+            'Producto' => $producto,
+            'statues' => 200
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producto $producto)
+    public function delete($id_producto)
     {
         //
     }
@@ -50,7 +77,7 @@ class ProductoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id_producto)
     {
         //
     }
