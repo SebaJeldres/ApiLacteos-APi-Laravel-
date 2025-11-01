@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 
+
+
+// Rutas Usuarios
+
 Route::get('/users', [userController::class,'index']);
 
 Route::get('/users/{id}', [userController::class,'show']);
