@@ -131,13 +131,48 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id_producto)
     {
-        //
+        $producto = Producto::find($id_producto);
+
+        if (!$producto) {
+            $data = [
+                'message' => 'No se encontro el producto',
+                'statues' => 404
+            ];
+            return response()->json($data,404);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'sometimes|required|string|max:255',
+            'categoria' => 'sometimes|required|string|max:255',
+            'stock' => 'sometimes|required|integer',
+            'peso' => 'sometimes|required',
+        ]);
+
+        if ($validator->fails()) {
+            $data = [
+                'messages' => 'Error en la validación',
+                'statues' => 400
+            ];
+            return response()->json($data,400);
+        }
+
+        $producto->nombre = $request->nombre;
+        $producto->categoria = $request->categoria;
+        $producto->stock = $request->stock;
+        $producto->peso = $request->peso;
+        $producto->save();
+
+        $data = [
+            'mesagges' => 'Producto actualizado',
+            'statues' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Producto $producto)
+    public function updatePartial(Request $request, $id_producto)
     {
         //
     }
