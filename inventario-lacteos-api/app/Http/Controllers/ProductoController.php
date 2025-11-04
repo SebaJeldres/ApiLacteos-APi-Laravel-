@@ -38,9 +38,44 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, )
+    public function store(Request $request )
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|string|max:255',
+            'categoria' => 'required|string|max:255',
+            'stock' => 'required|integer',
+            'peso' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $data = [
+                'message' => 'Error en la validación',
+                'erros' => $validator->errors(),
+                'statues' => 400
+            ];
+            return response()->json($data,400);
+        }
+
+        $producto = Producto::create([
+            'nombre' => $request->nombre,
+            'categoria' => $request->categoria,
+            'stock' => $request->stock,
+            'peso' => $request->peso,
+        ]);
+
+        if(!$producto) {
+            $data = [
+                'messages' => 'Error al crear el producto',
+                'statues' => 500
+            ];
+            return response()->json($data,500);
+        }
+
+        $data = [
+            'producto' => $producto,
+            'statues' => 201
+        ];
+        return response()->json($data,201);
     }
 
     /**
