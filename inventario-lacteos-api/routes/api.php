@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\StockTotalController;
 
 
 
@@ -34,3 +35,7 @@ Route::delete('/productos/{id}', [ProductoController::class,'delete']);
 Route::put('/productos/{id}', [ProductoController::class,'update']);
 
 Route::patch('/productos/{id}', [ProductoController::class,'updatePartial']);
+
+
+//Reportes productos
+Route::get('/stocktotal', [StockTotalController::class,'getStockTotal']);
